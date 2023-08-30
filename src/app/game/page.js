@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -13,8 +14,10 @@ export default function Game() {
         x: 0,
         y: 0,
         z: 0,
+        name: undefined,
     });
     const [isConnect, setIsConnect] = useState(false);
+    const [socket, setSocket] = useState(null);
 
     const userInfo = {
         sessionId: "admin",
@@ -27,17 +30,17 @@ export default function Game() {
     // socket.ioの初期化
 
     useEffect(() => {
-        const socket = io("https://sabatesuto.onrender.com/");
+        const socket_ = io("https://sabatesuto.onrender.com/");
 
-        socket.on("connect", () => {
+        socket_.on("connect", () => {
             console.log("socket connected");
             setIsConnect(true);
         });
-        socket.on("disconnect", () => {
+        socket_.on("disconnect", () => {
             console.log("socket disconnected");
             setIsConnect(false);
         });
-        socket.on("connect_error", (err) => {
+        socket_.on("connect_error", (err) => {
             console.log("サーバー接続エラー : ", err);
             alert("サーバー接続エラー : " + err);
         });
@@ -47,15 +50,24 @@ export default function Game() {
                 x: Math.floor(e.alpha * 10) / 10,
                 y: Math.floor(e.beta * 10) / 10,
                 z: Math.floor(e.gamma * 10) / 10,
+                name: playerName,
             };
-            socket.volatile.emit("angles", angles);
+            socket_.volatile.emit("angles", angles);
             setAngles(angles);
         };
         window.addEventListener("deviceorientation", handleOrientation, true);
+
+        setSocket(socket_);
+
+        return () => {
+            newSocket.disconnect();
+        };
     }, []);
 
     const onClick = () => {
-        // alert("clicked");
+        if (socket) {
+            socket.emit("shoot", angles);
+        }
     };
 
     return (
