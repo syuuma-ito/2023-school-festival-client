@@ -1,20 +1,12 @@
 "use client";
-import { useState } from "react";
-import sleep from "src/utils/sleep";
 import styles from "./button.module.css";
 
 export default function Button(props) {
-    const [isDisabled, setDisabled] = useState(false);
     const callback = props.onClick;
+    const isDisabled = props.disabled;
 
     const handleClick = async () => {
-        if (isDisabled) {
-            return;
-        }
-        setDisabled(true);
         callback();
-        await sleep(200);
-        setDisabled(false);
     };
 
     return (

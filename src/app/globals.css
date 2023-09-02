@@ -1,7 +1,4 @@
 :root {
-    --main-color: #0073ff;
-    --main-color-rgba: #008cff45;
-    --bg: #012;
     --text: rgb(0, 255, 0);
 }
 * {
@@ -33,12 +30,4 @@ body {
     overscroll-behavior-y: none;
     user-select: none;
     font-family: var(--font-makinas), var(--font-notojp), sans-serif;
-}
-
-@media screen and (min-width: 1000px) {
-    body {
-        width: 60%;
-        margin-left: 20%;
-        margin-right: 20%;
-    }
 }

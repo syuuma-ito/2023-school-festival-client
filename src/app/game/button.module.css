@@ -1,7 +1,7 @@
 .button {
     background-color: var(--bg);
-    width: calc(100vw - 10px);
-    height: calc(100vw - 10px);
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
     border-radius: 50%;
     border: 5px solid var(--main-color);
     box-shadow: 0 0 10px 0 var(--main-color);
@@ -9,8 +9,8 @@
 
 .button_disabled {
     background-color: var(--bg);
-    width: calc(100vw - 10px);
-    height: calc(100vw - 10px);
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
     border-radius: 50%;
     border: 5px solid var(--main-color-rgba);
 }
@@ -48,4 +48,9 @@
 }
 
 .container {
+    --size: min(50vh, 100vw);
+    height: var(--size);
+    width: var(--size);
+    /* margin-top: calc(var(--size) - 50vh); */
+    margin-left: calc((100vw - var(--size)) / 2);
 }
