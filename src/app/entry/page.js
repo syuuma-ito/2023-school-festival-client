@@ -1,6 +1,5 @@
 "use client";
 
-import sleep from "@/utils/sleep";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
@@ -14,7 +13,6 @@ export default function Home() {
 
     const handleClick = async () => {
         // 遷移
-        await sleep(600);
         router.push(url);
     };
 
