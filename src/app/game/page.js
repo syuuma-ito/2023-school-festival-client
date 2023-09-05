@@ -8,6 +8,7 @@ import config from "src/config/Config";
 import sleep from "src/utils/sleep";
 import Button from "./button";
 import InfoCard from "./infoCard";
+import Init from "./init";
 import styles from "./page.module.css";
 import ScoreBoard from "./scoreBoard";
 
@@ -16,28 +17,31 @@ export default function Game() {
     const playerName = searchParams.get("player_name");
     const sessionId = searchParams.get("session_id");
 
-    const [angles, setAngles] = useState({
-        x: 0,
-        y: 0,
-        z: 0,
-        name: undefined,
-    });
+    const [angles, setAngles] = useState({});
+    const [centerX, setCenterX] = useState(null);
+
     const [isDisabled, setDisabled] = useState(true);
+
+    // socket.ioの初期化
     const [isConnect, setIsConnect] = useState(false);
     const [socket, setSocket] = useState(null);
 
-    const userInfo = {
-        sessionId: sessionId,
-        name: "1P",
-        isConnect: isConnect,
-        X: angles.x,
-        Y: angles.y,
-        Z: angles.z,
+    const emitAngles = () => {
+        if (!isConnect) {
+            return;
+        }
+        socket.volatile.emit("angles", {
+            x: Math.floor((angles.x - centerX) * 10) / 10,
+            y: angles.y,
+            z: angles.z,
+            sessionId: sessionId,
+            playerName: playerName,
+        });
     };
 
     useEffect(() => {
         // socket.ioの初期化
-        const socket_ = io(config.ioServerURL);
+        const socket_ = io(config.ioServerURL, { autoConnect: false });
 
         socket_.on("connect", () => {
             console.log("socket connected");
@@ -53,24 +57,23 @@ export default function Game() {
             console.log("サーバー接続エラー : ", err);
             alert("サーバー接続エラー : " + err);
         });
+        socket_.connect();
+
+        setSocket(socket_);
 
         const handleOrientation = (e) => {
             const angles = {
                 x: Math.floor(e.alpha * 10) / 10,
                 y: Math.floor(e.beta * 10) / 10,
                 z: Math.floor(e.gamma * 10) / 10,
-                name: playerName,
-                sessionId: sessionId,
             };
-            socket_.volatile.emit("angles", angles);
             setAngles(angles);
+            emitAngles();
         };
         window.addEventListener("deviceorientation", handleOrientation, true);
 
-        setSocket(socket_);
-
         return () => {
-            socket_.disconnect();
+            socket.disconnect();
             window.removeEventListener("deviceorientation", handleOrientation, true);
         };
     }, []);
@@ -85,11 +88,26 @@ export default function Game() {
         setDisabled(false);
     };
 
+    const headerInit = () => {
+        setCenterX(angles.x);
+    };
+
+    const userInfo = {
+        isConnect: isConnect,
+        sessionId: sessionId,
+        name: playerName,
+        X: Math.floor((angles.x - centerX) * 10) / 10,
+        Y: angles.y,
+        Z: angles.z,
+        rawX: angles.x,
+        tan: Math.floor(Math.tan((angles.x - centerX) * (Math.PI / 180)) * 100) / 100,
+    };
+
     return (
         <div className={`${styles.container} ${styles["container-" + playerName]}`}>
             <InfoCard info={userInfo} />
             <ScoreBoard score={angles["x"]} />
-            <Button onClick={onClick} disabled={isDisabled}></Button>
+            {centerX ? <Button onClick={onClick} disabled={isDisabled}></Button> : <Init onClick={headerInit}></Init>}
         </div>
     );
 }

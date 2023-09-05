@@ -14,6 +14,8 @@ export default function InfoCard(props) {
                 <div className={styles.text_item}>X : {userInfo.X}</div>
                 <div className={styles.text_item}>Y : {userInfo.Y}</div>
                 <div className={styles.text_item}>Z : {userInfo.Z}</div>
+                <div className={styles.text_item}>rawX : {userInfo.rawX}</div>
+                <div className={styles.text_item}>tan : {userInfo.tan}</div>
             </div>
         </div>
     );

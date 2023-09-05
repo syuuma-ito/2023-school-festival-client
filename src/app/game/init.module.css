@@ -1,0 +1,49 @@
+.container {
+    --size: min(50vh, 100vw);
+    height: var(--size);
+    width: var(--size);
+    /* margin-top: calc(var(--size) - 50vh); */
+    margin-left: calc((100vw - var(--size)) / 2);
+    text-align: center;
+}
+
+.button {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    border: 1px solid var(--main-color);
+    background-color: transparent;
+    color: var(--main-color);
+    font-size: 30px;
+    transition: 0.1s;
+}
+.button:hover {
+    background-color: var(--main-color-rgba);
+}
+.button:active {
+    background-color: var(--main-color-rgba);
+    transform: scale(0.9);
+}
+
+.icon {
+    margin: 30px;
+    animation: rotate 2s ease-in-out infinite;
+    font-size: 30px;
+}
+
+.text {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(5deg);
+    }
+    50% {
+        transform: rotate(-5deg);
+    }
+    100% {
+        transform: rotate(5deg);
+    }
+}
