@@ -83,7 +83,13 @@ export default function Game() {
             return;
         }
         setDisabled(true);
-        socket.emit("shoot", angles);
+        socket.emit("shoot", {
+            x: Math.floor((angles.x - centerX) * 10) / 10,
+            y: angles.y,
+            z: angles.z,
+            sessionId: sessionId,
+            playerName: playerName,
+        });
         await sleep(config.shotCoolTime);
         setDisabled(false);
     };
