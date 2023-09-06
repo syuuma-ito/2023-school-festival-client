@@ -1,0 +1,116 @@
+.container {
+    text-align: center;
+}
+
+.title {
+    font-size: 30px;
+    margin: 20px;
+}
+.Ranking {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: 25px;
+    width: 100%;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.hexagon {
+    width: 75px;
+    height: 65px;
+    position: relative;
+}
+
+.hexagon div {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    left: 26%;
+    border-top: 2px solid var(--main-color);
+    border-bottom: 2px solid var(--main-color);
+    transform-origin: center;
+    box-sizing: border-box;
+}
+.Ranking_num {
+    position: absolute;
+    font-size: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.hexagon div:nth-of-type(1) {
+    transform: rotate(0deg);
+}
+.hexagon div:nth-of-type(2) {
+    transform: rotate(60deg);
+}
+
+.hexagon div:nth-of-type(3) {
+    transform: rotate(120deg);
+}
+
+.info {
+    position: relative;
+    height: 65px;
+    width: 70%;
+    border: 2px solid var(--main-color);
+    border-radius: 5px;
+    box-shadow: var(--main-color) 0 0 5px 1px;
+    text-align: left;
+}
+
+.Ranking_name {
+    font-size: 25px;
+    font-weight: bold;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.Ranking_score {
+    font-size: 12px;
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    color: var(--main-color);
+}
+
+.Ranking-1 {
+    color: #aaa;
+}
+.Ranking-2 {
+    color: #ffffff;
+}
+.Ranking-3 {
+    color: #00d0ff;
+}
+.Ranking-4 {
+    color: #0000ff;
+}
+.Ranking-5 {
+    color: #22ff00;
+}
+.Ranking-6 {
+    color: #f6ff00;
+}
+.Ranking-7 {
+    color: #ff8c00;
+}
+.Ranking-8 {
+    color: #ff0000;
+}
+.Ranking-9 {
+    color: #ff00ae;
+}
+.Ranking-10 {
+    color: #d050ff;
+}
