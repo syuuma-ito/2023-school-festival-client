@@ -18,26 +18,13 @@ export default function Game() {
     const sessionId = searchParams.get("session_id");
 
     const [angles, setAngles] = useState({});
-    const [centerX, setCenterX] = useState(null);
+    const [centerX, setCenterX] = useState(0);
 
     const [isDisabled, setDisabled] = useState(true);
 
     // socket.ioの初期化
     const [isConnect, setIsConnect] = useState(false);
     const [socket, setSocket] = useState(null);
-
-    const emitAngles = () => {
-        if (!isConnect) {
-            return;
-        }
-        socket.volatile.emit("angles", {
-            x: Math.floor((angles.x - centerX) * 10) / 10,
-            y: angles.y,
-            z: angles.z,
-            sessionId: sessionId,
-            playerName: playerName,
-        });
-    };
 
     useEffect(() => {
         // socket.ioの初期化
@@ -61,6 +48,12 @@ export default function Game() {
 
         setSocket(socket_);
 
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
+
+    useEffect(() => {
         const handleOrientation = (e) => {
             const angles = {
                 x: Math.floor(e.alpha * 10) / 10,
@@ -68,15 +61,22 @@ export default function Game() {
                 z: Math.floor(e.gamma * 10) / 10,
             };
             setAngles(angles);
-            emitAngles();
+            if (socket == null) {
+                return;
+            }
+            socket.volatile.emit("angles", {
+                x: Math.floor((angles.x - centerX) * 10) / 10,
+                y: angles.y,
+                z: angles.z,
+                sessionId: sessionId,
+                playerName: playerName,
+            });
         };
         window.addEventListener("deviceorientation", handleOrientation, true);
-
         return () => {
-            socket.disconnect();
             window.removeEventListener("deviceorientation", handleOrientation, true);
         };
-    }, []);
+    }, [centerX]);
 
     const onClick = async () => {
         if (isDisabled) {
