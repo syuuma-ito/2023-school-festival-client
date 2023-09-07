@@ -1,12 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
 
 export default function Home() {
-    const playerName = "1P";
-    const sessionId = "div";
-    const endpoint = "game1";
+    const searchParams = useSearchParams();
+    const playerName = searchParams.get("player_name");
+    const sessionId = searchParams.get("sessionId");
+    const endpoint = searchParams.get("endpoint");
     const router = useRouter();
 
     const url = `/game?player_name=${playerName}&session_id=${sessionId}&endpoint=${endpoint}`;

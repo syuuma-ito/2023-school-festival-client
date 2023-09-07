@@ -49,7 +49,7 @@ export default function Game() {
         setSocket(socket_);
 
         return () => {
-            socket.disconnect();
+            socket_.disconnect();
         };
     }, []);
 

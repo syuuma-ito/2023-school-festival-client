@@ -1,7 +1,7 @@
 module.exports = {
     //URLs
     ioServerURL: "https://sabatesuto.onrender.com/",
-    serverURL: "",
+    serverURL: "https://2023-school-festival-client.vercel.app",
 
     // ゲームの設定
     shotCoolTime: 200,

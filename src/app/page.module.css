@@ -1,0 +1,21 @@
+.container {
+    /* 縦並び */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.link {
+    color: var(--main-color);
+    text-decoration: none;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    border: 1px solid var(--main-color);
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.link:hover,
+.link:focus,
+.link:active {
+    text-decoration: underline;
+}
