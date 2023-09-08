@@ -9,8 +9,48 @@ export default function Ranking() {
         },
         {
             name: "ダミーデータ",
-            score: "9999999",
+            score: "999999",
             rank: "2",
+        },
+        {
+            name: "ダミーデータ",
+            score: "99999",
+            rank: "3",
+        },
+        {
+            name: "ダミーデータ",
+            score: "9999",
+            rank: "4",
+        },
+        {
+            name: "ダミーデータ",
+            score: "999",
+            rank: "5",
+        },
+        {
+            name: "ダミーデータ",
+            score: "99",
+            rank: "6",
+        },
+        {
+            name: "ダミーデータ",
+            score: "9",
+            rank: "7",
+        },
+        {
+            name: "ダミーデータ",
+            score: "8",
+            rank: "8",
+        },
+        {
+            name: "ダミーデータ",
+            score: "7",
+            rank: "9",
+        },
+        {
+            name: "ダミーデータ",
+            score: "6",
+            rank: "10",
         },
     ];
 
