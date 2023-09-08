@@ -4,6 +4,7 @@
 import { executeWithCooldown } from "@/utils/cooldown";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import Modal from "react-modal";
 import { io } from "socket.io-client";
 import config from "src/config/Config";
 import sleep from "src/utils/sleep";
@@ -22,10 +23,13 @@ export default function Game() {
     const [centerX, setCenterX] = useState(0);
 
     const [isDisabled, setDisabled] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // socket.ioの初期化
     const [isConnect, setIsConnect] = useState(false);
     const [socket, setSocket] = useState(null);
+
+    const [score, setScore] = useState(0);
 
     useEffect(() => {
         // socket.ioの初期化
@@ -45,6 +49,29 @@ export default function Game() {
             console.log("サーバー接続エラー : ", err);
             alert("サーバー接続エラー : " + err);
         });
+        socket_.on("connect_timeout", (err) => {
+            console.log("サーバー接続タイムアウト : ", err);
+            alert("サーバー接続タイムアウト : " + err);
+        });
+        socket_.on("error", (err) => {
+            console.log("サーバーエラー : ", err);
+            alert("サーバーエラー : " + err);
+        });
+        socket_.on("reconnect_error", (err) => {
+            console.log("サーバー再接続エラー : ", err);
+            alert("サーバー再接続エラー : " + err);
+        });
+        socket_.on("score_update", (data) => {
+            console.log("score_update : ", data);
+            setScore(data.score);
+        });
+        socket_.on("hit", (data) => {
+            console.log("hit : ", data);
+            if (data.playerName === playerName) {
+                // バイブレーション
+                if (navigator && navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            }
+        });
         socket_.connect();
 
         setSocket(socket_);
@@ -54,7 +81,7 @@ export default function Game() {
         };
     }, []);
 
-    useEffect(() => {
+    const addOrientationListener = () => {
         const handleOrientation = (e) => {
             const angles = {
                 x: Math.floor(e.alpha * 10) / 10,
@@ -76,10 +103,34 @@ export default function Game() {
             }, config.anglesCoolTime);
         };
         window.addEventListener("deviceorientation", handleOrientation, true);
+    };
+
+    useEffect(() => {
+        addOrientationListener();
+    }, [centerX]);
+
+    const requestPermissionAndListen = async () => {
+        const permission = await DeviceOrientationEvent.requestPermission();
+        if (permission === "granted") {
+            addOrientationListener();
+            setIsModalOpen(false);
+        } else {
+            alert("許可がない場合はゲームをプレイできません");
+        }
+    };
+
+    useEffect(() => {
+        if (typeof DeviceOrientationEvent.requestPermission === "function") {
+            // safariの場合
+            // ios13+
+            setIsModalOpen(true);
+        } else {
+            addOrientationListener();
+        }
         return () => {
             window.removeEventListener("deviceorientation", handleOrientation, true);
         };
-    }, [centerX]);
+    }, []);
 
     const onClick = async () => {
         if (isDisabled) {
@@ -115,8 +166,21 @@ export default function Game() {
     return (
         <div className={`${styles.container} ${styles["container-" + playerName]}`}>
             <InfoCard info={userInfo} />
-            <ScoreBoard score={angles["x"]} />
+            <ScoreBoard score={score} />
             {centerX ? <Button onClick={onClick} disabled={isDisabled}></Button> : <Init onClick={headerInit}></Init>}
+            <Modal isOpen={isModalOpen} onRequestClose={() => setIsModalOpen(false)} contentLabel="センサーパーミッションの許可" className={styles.modal} overlayClassName={styles.modal_overlay}>
+                <h2>
+                    このゲームはジャイロセンサーを使用します
+                    <br />
+                    許可をお願いします
+                </h2>
+                <button onClick={requestPermissionAndListen} className={styles.modal_button}>
+                    許可する
+                </button>
+                <button onClick={() => setIsModalOpen(false)} className={styles.modal_button}>
+                    キャンセル
+                </button>
+            </Modal>
         </div>
     );
 }
