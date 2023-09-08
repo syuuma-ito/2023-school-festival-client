@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
+import { executeWithCooldown } from "@/utils/cooldown";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
@@ -64,13 +65,15 @@ export default function Game() {
             if (socket == null) {
                 return;
             }
-            socket.volatile.emit("angles", {
-                x: Math.floor((angles.x - centerX) * 10) / 10,
-                y: angles.y,
-                z: angles.z,
-                sessionId: sessionId,
-                playerName: playerName,
-            });
+            executeWithCooldown(() => {
+                socket.volatile.emit("angles", {
+                    x: Math.floor((angles.x - centerX) * 10) / 10,
+                    y: angles.y,
+                    z: angles.z,
+                    sessionId: sessionId,
+                    playerName: playerName,
+                });
+            }, config.anglesCoolTime);
         };
         window.addEventListener("deviceorientation", handleOrientation, true);
         return () => {
