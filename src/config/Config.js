@@ -4,6 +4,8 @@ module.exports = {
     serverURL: "https://2023-school-festival-client.vercel.app",
     anglesCoolTime: 50,
 
+    rankingURL: "https://rankingusaba.onrender.com/top10",
+
     // ゲームの設定
     shotCoolTime: 200,
 
