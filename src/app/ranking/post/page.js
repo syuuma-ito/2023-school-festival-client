@@ -1,5 +1,6 @@
 "use client";
 import Config from "@/config/Config";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import styles from "./page.module.css";
@@ -12,11 +13,13 @@ export default function RankingPost() {
     const [grade, setGrade] = useState(0);
     const [class_, setClass] = useState(0);
     const [number, setNumber] = useState(0);
+    const [state, setState] = useState("");
 
     const onChangeName = (e) => {
         setName(e.target.value);
     };
     const onClickPost = () => {
+        setState("送信中...");
         const sendData = {
             user_hash: user_hash,
             user_data: {
@@ -40,15 +43,13 @@ export default function RankingPost() {
             .then((data) => {
                 console.log(data);
                 if (data.message === "Success") {
+                    setState("送信しました。");
                     alert("送信しました。");
                 } else {
+                    setState("送信に失敗しました。");
                     alert("送信に失敗しました。");
                 }
             });
-        // .catch((error) => {
-        //     console.error(error);
-        //     alert("送信に失敗しました。");
-        // });
     };
     const onChangeGrade = (e) => {
         setGrade(e.target.value);
@@ -69,7 +70,6 @@ export default function RankingPost() {
                 <br />
                 ※本名を入力しないでください。
             </div>
-            <line className={styles.line} />
             代表者の学年・クラス・番号を入力してください。
             <div className={styles.input_con}>
                 <div className={styles.input_info_con}>
@@ -88,6 +88,10 @@ export default function RankingPost() {
             <button onClick={onClickPost} className={styles.input_button}>
                 送信
             </button>
+            <div className={styles.state}>{state}</div>
+            <Link href="/ranking" className={styles.link}>
+                ←ランキングページへ戻る
+            </Link>
         </div>
     );
 }
