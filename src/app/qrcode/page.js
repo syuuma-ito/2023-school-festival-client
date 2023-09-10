@@ -20,6 +20,7 @@ export default function Home() {
     const [isConnect, setIsConnect] = useState(false);
     const [socket, setSocket] = useState(null);
     const [score, setScore] = useState(0);
+    const [showButton, setShowButton] = useState(false);
 
     useEffect(() => {
         // socket.ioの初期化
@@ -55,6 +56,11 @@ export default function Home() {
             setQrcodeUpdatedAt(new Date().toLocaleTimeString());
             setScore(data.score);
             setSessionId(data.sessionId);
+            setShowButton(true);
+        });
+        socket_.on("start", (data) => {
+            console.log("start : ", data);
+            setShowButton(false);
         });
         socket_.connect();
 
@@ -82,7 +88,13 @@ export default function Home() {
             <div>セッションID : {sessionId}</div>
             <div>endpoint {endpoint}</div>
 
-            <button onClick={onClickStart}>スタート！！！！！！</button>
+            {showButton ? (
+                <button onClick={onClickStart} className={styles.start_button}>
+                    スタート！！！！！！
+                </button>
+            ) : (
+                <></>
+            )}
         </div>
     );
 }

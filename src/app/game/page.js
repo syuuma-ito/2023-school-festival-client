@@ -150,6 +150,10 @@ export default function Game() {
 
     const headerInit = () => {
         setCenterX(angles.x);
+        socket.emit("user_join", {
+            sessionId: sessionId,
+            playerName: playerName,
+        });
     };
 
     const userInfo = {
