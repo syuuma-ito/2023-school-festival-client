@@ -1,0 +1,102 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+}
+
+.title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 3px #0f0;
+}
+@media screen and (min-width: 768px) {
+    .title {
+        font-size: 2.5rem;
+    }
+}
+
+.input_text {
+    border: 1px solid var(--main-color);
+    background-color: var(--bg);
+    width: 100%;
+    max-width: 500px;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--main-color);
+    font-size: 1.5rem;
+    font-family: var(--font-makinas);
+}
+
+.input_text:focus {
+    border: 1px solid var(--main-color);
+    box-shadow: 0 0 5px 2px var(--main-color);
+    outline: none;
+}
+
+.memo {
+    font-size: 0.8rem;
+}
+
+.line {
+    border: 1px solid var(--main-color);
+    width: 100%;
+    height: 1px;
+    max-width: 500px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.input_button {
+    border: 1px solid var(--main-color);
+    background-color: transparent;
+    color: var(--main-color);
+    width: 80%;
+    margin: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
+    max-width: 400px;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    font-family: var(--font-makinas);
+    cursor: pointer;
+}
+.input_button:hover {
+    background-color: var(--main-color-rgba);
+}
+.input_info_con {
+    /* 横並び */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 1rem;
+}
+.input_text_info {
+    border: 1px solid var(--main-color);
+    background-color: var(--bg);
+    width: 50px;
+    height: 50px;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--main-color);
+    font-size: 1.5rem;
+    font-family: var(--font-makinas);
+}
+
+.input_text_info:focus {
+    border: 1px solid var(--main-color);
+    outline: none;
+}
+
+.input_con {
+    margin: 20px;
+}

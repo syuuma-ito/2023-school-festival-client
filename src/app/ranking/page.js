@@ -11,7 +11,7 @@ export default function RankingHome() {
 
     useEffect(() => {
         setLoading(true);
-        fetch(Config.rankingURL, { cache: "no-cache" })
+        fetch(Config.rankingURL + "/top10", { cache: "no-cache" })
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
