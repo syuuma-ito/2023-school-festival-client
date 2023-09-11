@@ -18,20 +18,6 @@
     padding: 0 20px;
 }
 
-.button {
-    border: var(--main-color) 2px solid;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-bottom: 20px;
-    background-color: transparent;
-    color: var(--main-color);
-}
-
-.button:hover {
-    background-color: var(--main-color);
-    color: #fff;
-}
-
 .hexagon {
     width: 75px;
     height: 65px;
