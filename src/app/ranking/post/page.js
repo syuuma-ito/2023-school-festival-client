@@ -63,7 +63,11 @@ export default function RankingPost() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.title}>ニックネームを入力してください。</div>
+            <div className={styles.title}>
+                ニックネームを入力してください。
+                <br />
+                公序良俗に反する名前はおやめください
+            </div>
             <input type="text" value={name} onChange={onChangeName} className={styles.input_text} required />
             <div className={styles.memo}>
                 ※ここに入力した名前がランキングに表示されます。
