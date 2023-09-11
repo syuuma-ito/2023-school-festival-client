@@ -7,7 +7,7 @@ export default function QR(props) {
     return (
         <QRCode
             value={props.URL}
-            ecLevel={"Q"}
+            ecLevel={"L"}
             size={props.size || "256"}
             quietZone={"50"}
             qrStyle={"dots"}

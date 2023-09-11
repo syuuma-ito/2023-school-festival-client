@@ -1,25 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
+import sleep from "@/utils/sleep";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import styles from "./page.module.css";
 
 export default function Home() {
     const searchParams = useSearchParams();
     const playerName = searchParams.get("player_name");
     const sessionId = searchParams.get("sessionId");
-    const endpoint = searchParams.get("endpoint");
     const router = useRouter();
 
-    const url = `/game?player_name=${playerName}&session_id=${sessionId}&endpoint=${endpoint}`;
+    const url = `/game?player_name=${playerName}&session_id=${sessionId}`;
 
-    const handleClick = async () => {
-        // 遷移
+    useEffect(() => {
+        sleep(1000);
         router.push(url);
-    };
+    }, []);
 
     return (
         <div className={`${styles.container} ${styles["container-" + playerName]}`}>
-            <button className={styles.button} onClick={handleClick}>
+            {/* <button className={styles.button} onClick={handleClick}>
                 <span className={styles.buttonText}>START</span>
                 <div className={styles.clip}>
                     <div id="leftTop" className={`${styles.corner} ${styles.leftTop}`}></div>
@@ -29,7 +31,9 @@ export default function Home() {
                 </div>
                 <span id="rightArrow" className={`${styles.rightArrow} ${styles.arrow}`}></span>
                 <span id="leftArrow" className={`${styles.leftArrow} ${styles.arrow}`}></span>
-            </button>
+            </button> */}
+            <div className={styles.title}>{playerName}として参加してます....</div>
+            <div className={styles.title2}>サーバーへ接続中....</div>
         </div>
     );
 }

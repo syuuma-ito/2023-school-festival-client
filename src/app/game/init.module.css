@@ -11,11 +11,12 @@
     width: 50%;
     height: 50%;
     border-radius: 50%;
-    border: 1px solid #ff0a;
+    border: 3px solid #ff0;
     background-color: transparent;
-    color: #ff0a;
+    color: #ff0;
     font-size: 30px;
     transition: 0.1s;
+    font-family: var(--font-makinas);
 }
 .button:hover {
     background-color: var(--main-color-rgba);
@@ -26,12 +27,14 @@
 }
 
 .icon {
+    fill: #ff0;
     margin: 30px;
     animation: rotate 2s ease-in-out infinite;
     font-size: 30px;
 }
 
 .text {
+    color: #ff0;
     font-size: 20px;
     margin-bottom: 20px;
 }

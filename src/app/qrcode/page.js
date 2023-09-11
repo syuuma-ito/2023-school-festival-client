@@ -15,7 +15,7 @@ export default function Home() {
     const endpoint = searchParams.get("endpoint");
 
     const [sessionId, setSessionId] = useState("");
-    const [qrcodeURL, setQrcodeURL] = useState("");
+    const [qrcodeURL, setQrcodeURL] = useState(`${config.serverURL}/entry?sessionId=${123456}&player_name=${playerName}`);
     const [qrcodeUpdatedAt, setQrcodeUpdatedAt] = useState("");
     const [isConnect, setIsConnect] = useState(false);
     const [socket, setSocket] = useState(null);
@@ -52,7 +52,7 @@ export default function Home() {
         });
         socket_.on("init", (data) => {
             console.log("init : ", data);
-            setQrcodeURL(`${config.serverURL}/entry?sessionId=${data.sessionId}&player_name=${playerName}&endpoint=${endpoint}`);
+            setQrcodeURL(`${config.serverURL}/entry?sessionId=${data.sessionId}&player_name=${playerName}`);
             setQrcodeUpdatedAt(new Date().toLocaleTimeString());
             setScore(data.score);
             setSessionId(data.sessionId);
@@ -77,8 +77,8 @@ export default function Home() {
 
     return (
         <div className={`${styles.container} ${styles["container-" + playerName]}`}>
+            <h1 className={styles.title}>QRコードを読み取ってください</h1>
             <QR URL={qrcodeURL} />
-            <div className={styles.title}>QRコードを読み取ってください</div>
             <div className={styles.playerName}>あなたのプレイヤー名 : {playerName}</div>
             <div>QRコード更新時間 {qrcodeUpdatedAt}</div>
             <div>スコア : {score}</div>
